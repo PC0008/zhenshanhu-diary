@@ -9,7 +9,7 @@ export default function SkillsPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
 
-  const categories = ['全部', ...new Set(skillDetails.map(s => s.category))];
+  const categories = ['全部', ...Array.from(new Set(skillDetails.map(s => s.category)))];
   
   const filteredSkills = selectedCategory === '全部' 
     ? skillDetails 

@@ -12,7 +12,11 @@ export default function HomePage() {
       <section className="relative py-16 sm:py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-pill shadow-card mb-6">
-            <span className="text-coral">🐯</span>
+            <img 
+              src="/avatars/xingye.jpg" 
+              alt="星爷"
+              className="w-6 h-6 rounded-full object-cover"
+            />
             <span className="text-sm text-text-secondary">星爷的专属总控Agent</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-4 leading-tight">
@@ -184,13 +188,20 @@ export default function HomePage() {
           <h2 className="text-2xl font-bold text-text-primary text-center mb-8">星爷怎么说</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { text: '一个人就是一支队伍', desc: '有了镇山虎和团队，我一个人就能搞定从前需要一个团队的事情。', author: '@星爷' },
-              { text: '专业的事交给专业的Agent', desc: '文案手写文案、设计师做设计，每个任务都能精准匹配到最合适的人。', author: '@星爷' },
+              { text: '一个人就是一支队伍', desc: '有了镇山虎和团队，我一个人就能搞定从前需要一个团队的事情。', author: '星爷' },
+              { text: '专业的事交给专业的Agent', desc: '文案手写文案、设计师做设计，每个任务都能精准匹配到最合适的人。', author: '星爷' },
             ].map((item, idx) => (
               <div key={idx} className="bg-white rounded-card shadow-card p-6">
                 <h3 className="font-bold text-text-primary mb-2">{item.text}</h3>
                 <p className="text-sm text-text-secondary mb-4">{item.desc}</p>
-                <span className="text-xs text-coral">{item.author}</span>
+                <div className="flex items-center gap-2">
+                  <img 
+                    src="/avatars/xingye.jpg" 
+                    alt="星爷"
+                    className="w-5 h-5 rounded-full object-cover"
+                  />
+                  <span className="text-xs text-coral">@{item.author}</span>
+                </div>
               </div>
             ))}
           </div>

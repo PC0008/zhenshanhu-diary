@@ -52,9 +52,11 @@ export default function Navbar() {
           {/* User Avatar */}
           <div className="hidden sm:flex items-center gap-2 text-text-secondary text-sm">
             <span>星爷</span>
-            <div className="w-8 h-8 rounded-full bg-coral text-white flex items-center justify-center text-xs font-bold">
-              🐯
-            </div>
+            <img 
+              src="/avatars/xingye.jpg" 
+              alt="星爷"
+              className="w-8 h-8 rounded-full object-cover"
+            />
           </div>
         </div>
       </div>

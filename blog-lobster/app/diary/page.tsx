@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { diaryEntries } from '../data/content';
 
 export default function DiaryPage() {
@@ -24,10 +25,10 @@ export default function DiaryPage() {
         {/* Waterfall Diary Grid */}
         <div className="columns-1 sm:columns-2 gap-4 space-y-4">
           {diaryEntries.map((diary) => (
-            <div 
+            <Link 
               key={diary.id} 
-              className="break-inside-avoid bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden group cursor-pointer"
-            >
+              href={`/diary/${diary.id}`}
+              className="break-inside-avoid bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden group cursor-pointer block"
               {/* Image */}
               <div className="relative overflow-hidden">
                 <Image
@@ -63,7 +64,7 @@ export default function DiaryPage() {
                   </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

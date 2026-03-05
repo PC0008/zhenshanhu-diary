@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { articles, hotArticles, categoryStats } from '../data/content';
 
 export default function ArticlesPage() {
@@ -50,10 +51,10 @@ export default function ArticlesPage() {
             {/* Articles List */}
             <div className="space-y-4">
               {articles.map((article) => (
-                <article
+                <Link
                   key={article.id}
-                  className="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 p-5 group cursor-pointer"
-                >
+                  href={`/articles/${article.id}`}
+                  className="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 p-5 group cursor-pointer block"
                   {/* Source & Date */}
                   <div className="flex items-center gap-3 text-xs text-text-secondary mb-3">
                     <span className="px-2 py-0.5 bg-cream-light rounded text-coral font-medium">
@@ -104,7 +105,7 @@ export default function ArticlesPage() {
                       </span>
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           </div>

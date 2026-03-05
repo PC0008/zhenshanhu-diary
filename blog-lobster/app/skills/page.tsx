@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 import { skillDetails } from '../data/content';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 
 export default function SkillsPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -19,7 +17,7 @@ export default function SkillsPage() {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2000);
+      setTimeout(() => setCopiedId(null), 2002);
     } catch (err) {
       console.error('复制失败:', err);
     }
@@ -27,8 +25,6 @@ export default function SkillsPage() {
 
   return (
     <div className="min-h-screen bg-[#FDF6F0]">
-      <Navbar />
-      
       <main className="max-w-6xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
@@ -148,8 +144,6 @@ export default function SkillsPage() {
           </p>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

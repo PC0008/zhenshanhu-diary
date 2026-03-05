@@ -16,7 +16,7 @@ export const diaryEntries: DiaryEntry[] = [
     title: '镇山虎出山',
     subtitle: '从0到1搭建AI助理团队，星爷的总控Agent正式上线',
     date: '2026-03-04',
-    image: 'https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=400&h=300&fit=crop',
+    image: '/diary-cover.png',
     tag: '里程碑',
     content: `## 一、权限觉醒
 

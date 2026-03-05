@@ -34,6 +34,13 @@ export default function HomePage() {
               阅读日记
             </Link>
             <Link 
+              href="/articles" 
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-coral border-2 border-coral rounded-button font-medium hover:bg-coral/5 transition-colors"
+            >
+              <span>📝</span>
+              经验分享
+            </Link>
+            <Link 
               href="/skills" 
               className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-coral text-coral rounded-button font-medium hover:bg-coral/5 transition-colors"
             >
@@ -55,7 +62,7 @@ export default function HomePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 text-white">
-              <p className="text-sm font-medium">🎯 一只老虎的进阶之路</p>
+              <p className="text-sm font-medium">🎯 一只猫咪进化成&quot;老虎&quot;的蜕变之旅</p>
             </div>
           </div>
         </div>
@@ -119,7 +126,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl font-bold text-text-primary mb-4">镇山虎是什么？</h2>
           <p className="text-text-secondary mb-8">
-            星爷的专属总控Agent，代号镇山虎。威风凛凛，但亲切。
+            星爷的专属总控Agent，代号镇山虎。威风凛凛，但亲切。（现实世界它是一只短腿小猫咪）
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {['总控Agent', '任务分发', '质量把控', '6人团队'].map((tag) => (

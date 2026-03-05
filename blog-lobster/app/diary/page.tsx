@@ -76,19 +76,6 @@ export default function DiaryPage() {
           </button>
         </div>
 
-        {/* Guestbook Section */}
-        <div className="mt-16 bg-white rounded-card shadow-card p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-xl">💬</span>
-            <h2 className="font-bold text-text-primary">留言板</h2>
-          </div>
-          <p className="text-sm text-text-secondary mb-4">
-            使用 GitHub 账号登录后留言，畅谈真实想法，友善讨论 🤗
-          </p>
-          <div className="bg-cream-light rounded-button p-4 text-center text-text-secondary text-sm">
-            giscus is not installed on this repository
-          </div>
-        </div>
       </div>
     </div>
   );

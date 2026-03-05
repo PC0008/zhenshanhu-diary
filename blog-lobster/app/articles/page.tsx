@@ -1,7 +1,18 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import { articles, hotArticles, categoryStats } from '../data/content';
 
 export default function ArticlesPage() {
+  const [selectedTag, setSelectedTag] = useState<string>('全部');
+  
+  const allTags = ['全部', '模型对比', '多Agent', 'OpenClaw', '踩坑', '权限', '最佳实践'];
+  
+  const filteredArticles = selectedTag === '全部' 
+    ? articles 
+    : articles.filter(article => article.tags.includes(selectedTag));
+
   return (
     <div className="min-h-screen py-8 px-4">
       <div className="max-w-6xl mx-auto">
@@ -32,11 +43,12 @@ export default function ArticlesPage() {
 
             {/* Category Tags */}
             <div className="flex flex-wrap gap-2 mb-6">
-              {['全部', '模型对比', '多Agent', 'OpenClaw'].map((tag, idx) => (
+              {allTags.map((tag) => (
                 <button
                   key={tag}
+                  onClick={() => setSelectedTag(tag)}
                   className={`px-3 py-1.5 rounded-pill text-xs font-medium transition-colors ${
-                    idx === 0
+                    selectedTag === tag
                       ? 'bg-coral text-white'
                       : 'bg-white text-text-secondary hover:bg-cream-light'
                   }`}
@@ -46,11 +58,11 @@ export default function ArticlesPage() {
               ))}
             </div>
 
-            <p className="text-sm text-text-secondary mb-4">共 {articles.length} 篇文章</p>
+            <p className="text-sm text-text-secondary mb-4">共 {filteredArticles.length} 篇文章</p>
 
             {/* Articles List */}
             <div className="space-y-4">
-              {articles.map((article) => (
+              {filteredArticles.map((article) => (
                 <Link
                   key={article.id}
                   href={`/articles/${article.id}`}

@@ -75,6 +75,118 @@ export interface Skill {
   featured?: boolean;
 }
 
+export interface SkillDetail {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  category: string;
+  configCode: string;
+  installCommand?: string;
+  features: string[];
+}
+
+export const skillDetails: SkillDetail[] = [
+  {
+    id: 'web-search',
+    name: '网页搜索',
+    description: '智能网页搜索与信息聚合，支持多引擎同时搜索',
+    icon: '🔍',
+    category: '信息获取',
+    configCode: `{
+  "name": "web_search",
+  "type": "web_search",
+  "config": {
+    "engines": ["google", "bing"],
+    "max_results": 10
+  }
+}`,
+    installCommand: 'openclaw skill add web-search',
+    features: ['多引擎搜索', '结果聚合', '智能摘要', '关键词高亮']
+  },
+  {
+    id: 'xiaohongshu',
+    name: '小红书运营',
+    description: '小红书内容创作、发布、数据分析一体化工具',
+    icon: '📕',
+    category: '社媒运营',
+    configCode: `{
+  "name": "xiaohongshu_mcp",
+  "type": "mcp",
+  "config": {
+    "server": "xiaohongshu-mcp",
+    "actions": ["search", "post", "analyze"]
+  }
+}`,
+    installCommand: 'openclaw skill add xiaohongshu-mcp',
+    features: ['笔记搜索', '自动发布', '数据分析', '竞品监控']
+  },
+  {
+    id: 'feishu-doc',
+    name: '飞书文档',
+    description: '飞书文档自动创建、编辑、管理',
+    icon: '📄',
+    category: '办公自动化',
+    configCode: `{
+  "name": "feishu_doc",
+  "type": "feishu",
+  "config": {
+    "app_id": "cli_xxx",
+    "permissions": ["doc:read", "doc:write"]
+  }
+}`,
+    features: ['文档创建', '内容编辑', '表格操作', '权限管理']
+  },
+  {
+    id: 'browser-control',
+    name: '浏览器控制',
+    description: '自动化网页操作、数据抓取、表单填写',
+    icon: '🌐',
+    category: '自动化',
+    configCode: `{
+  "name": "browser",
+  "type": "browser",
+  "config": {
+    "headless": false,
+    "timeout": 30000
+  }
+}`,
+    features: ['页面导航', '元素点击', '表单填写', '截图保存']
+  },
+  {
+    id: 'image-gen',
+    name: 'AI图片生成',
+    description: '集成DALL-E、Midjourney等AI绘图工具',
+    icon: '🎨',
+    category: '内容创作',
+    configCode: `{
+  "name": "image_generation",
+  "type": "ai_image",
+  "config": {
+    "provider": "dalle",
+    "size": "1024x1024"
+  }
+}`,
+    features: ['文生图', '图生图', '风格迁移', '批量生成']
+  },
+  {
+    id: 'tts',
+    name: '语音合成',
+    description: '多音色TTS语音生成，支持中英文',
+    icon: '🔊',
+    category: '内容创作',
+    configCode: `{
+  "name": "tts",
+  "type": "voice",
+  "config": {
+    "voice": "nova",
+    "speed": 1.0
+  }
+}`,
+    features: ['多音色选择', '语速调节', '情感控制', '音频导出']
+  }
+];
+
 export const skills: Skill[] = [
   {
     id: '1',

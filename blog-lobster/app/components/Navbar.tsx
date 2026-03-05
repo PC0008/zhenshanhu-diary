@@ -7,7 +7,7 @@ const navItems = [
   { href: '/', label: '首页', icon: '🏠' },
   { href: '/diary', label: '日记', icon: '📔' },
   { href: '/articles', label: '文章', icon: '📝' },
-  { href: '/skills', label: '团队', icon: '👥' },
+  { href: '/skills', label: '技能', icon: '🛠️' },
 ];
 
 export default function Navbar() {

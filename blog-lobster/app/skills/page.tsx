@@ -1,160 +1,155 @@
 'use client';
 
 import { useState } from 'react';
-import { skills, allSkills, skillCategories } from '../data/content';
+import { skillDetails } from '../data/content';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export default function SkillsPage() {
-  const [activeCategory, setActiveCategory] = useState('全部');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('全部');
 
-  const filteredSkills = activeCategory === '全部' 
-    ? allSkills 
-    : allSkills.filter(skill => skill.category === activeCategory);
+  const categories = ['全部', ...new Set(skillDetails.map(s => s.category))];
+  
+  const filteredSkills = selectedCategory === '全部' 
+    ? skillDetails 
+    : skillDetails.filter(s => s.category === selectedCategory);
+
+  const copyToClipboard = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch (err) {
+      console.error('复制失败:', err);
+    }
+  };
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-[#FDF6F0]">
+      <Navbar />
+      
+      <main className="max-w-6xl mx-auto px-4 py-12">
         {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-2xl font-bold text-text-primary flex items-center justify-center gap-2">
-            <span className="text-3xl">🐯</span>
-            团队成员
+        <div className="text-center mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#E85A4F] mb-4">
+            🛠️ 技能商店
           </h1>
-          <p className="text-text-secondary mt-2">
-            6人Agent编制，专业分工，协同作战，为星爷提供全方位服务
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            我们用过的好用技能，一键复制配置，快速搭建你的 AI 团队
           </p>
         </div>
 
-        {/* Featured Skill Packs */}
-        <div className="mb-12">
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-coral">👥</span>
-            <h2 className="font-bold text-text-primary">核心成员 — 6人Agent团队</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {skills.filter(s => s.featured).map((skill) => (
-              <div
-                key={skill.id}
-                className="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 p-5 group cursor-pointer"
-              >
-                <div className="flex items-start gap-4">
-                  <span className="text-4xl">{skill.icon}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-bold text-text-primary">{skill.name}</h3>
-                      {skill.tag && (
-                        <span className={`px-2 py-0.5 ${skill.tagColor} text-white text-xs rounded-pill`}>
-                          {skill.tag}
-                        </span>
-                      )}
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                selectedCategory === cat
+                  ? 'bg-[#E85A4F] text-white shadow-lg'
+                  : 'bg-white text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Skills Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filteredSkills.map((skill) => (
+            <div
+              key={skill.id}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+            >
+              {/* Header */}
+              <div className="p-6 border-b border-gray-100">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl">{skill.icon}</span>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800">{skill.name}</h3>
+                      <span className="text-sm text-[#E85A4F] bg-[#E85A4F]/10 px-2 py-1 rounded-full">
+                        {skill.category}
+                      </span>
                     </div>
-                    <p className="text-sm text-text-secondary mt-2 line-clamp-2">
-                      {skill.description}
-                    </p>
-                    <button className="mt-3 text-coral text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                      查看详情 →
+                  </div>
+                </div>
+                <p className="mt-3 text-gray-600">{skill.description}</p>
+              </div>
+
+              {/* Features */}
+              <div className="px-6 py-4 bg-gray-50">
+                <h4 className="text-sm font-semibold text-gray-700 mb-2">✨ 功能特性</h4>
+                <div className="flex flex-wrap gap-2">
+                  {skill.features.map((feature, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs bg-white px-2 py-1 rounded border border-gray-200"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Config Code */}
+              <div className="px-6 py-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-sm font-semibold text-gray-700">⚙️ 配置代码</h4>
+                  <button
+                    onClick={() => copyToClipboard(skill.configCode, `${skill.id}-config`)}
+                    className={`text-xs px-3 py-1 rounded-full transition-all ${
+                      copiedId === `${skill.id}-config`
+                        ? 'bg-green-500 text-white'
+                        : 'bg-[#E85A4F] text-white hover:bg-[#d54a3f]'
+                    }`}
+                  >
+                    {copiedId === `${skill.id}-config` ? '✓ 已复制' : '📋 复制'}
+                  </button>
+                </div>
+                <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto">
+                  <code>{skill.configCode}</code>
+                </pre>
+              </div>
+
+              {/* Install Command */}
+              {skill.installCommand && (
+                <div className="px-6 pb-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-sm font-semibold text-gray-700">📦 安装命令</h4>
+                    <button
+                      onClick={() => copyToClipboard(skill.installCommand!, `${skill.id}-cmd`)}
+                      className={`text-xs px-3 py-1 rounded-full transition-all ${
+                        copiedId === `${skill.id}-cmd`
+                          ? 'bg-green-500 text-white'
+                          : 'bg-[#E85A4F] text-white hover:bg-[#d54a3f]'
+                      }`}
+                    >
+                      {copiedId === `${skill.id}-cmd` ? '✓ 已复制' : '📋 复制'}
                     </button>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* All Skills Section */}
-        <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="font-bold text-text-primary flex items-center gap-2">
-              <span>🔧</span>
-              全部能力
-            </h2>
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 bg-coral text-white text-xs rounded-pill">
-                {allSkills.length}+ 技能
-              </span>
-            </div>
-          </div>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {skillCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-4 py-1.5 rounded-pill text-sm font-medium transition-colors ${
-                  activeCategory === category
-                    ? 'bg-coral text-white'
-                    : 'bg-white text-text-secondary hover:bg-cream-light'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          {/* Skills Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredSkills.map((skill) => (
-              <div
-                key={skill.id}
-                className="bg-white rounded-card shadow-card hover:shadow-card-hover transition-all duration-300 p-4 group cursor-pointer"
-              >
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">{skill.icon}</span>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-text-primary text-sm">{skill.name}</h3>
-                    <p className="text-xs text-text-secondary mt-1 line-clamp-2">
-                      {skill.desc}
-                    </p>
-                    <span className="inline-block mt-2 px-2 py-0.5 bg-cream-light text-text-secondary text-xs rounded">
-                      {skill.category}
-                    </span>
+                  <div className="bg-gray-800 text-gray-100 p-3 rounded-lg text-sm font-mono">
+                    {skill.installCommand}
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* Team Structure */}
-        <div className="mt-16 bg-gradient-to-r from-coral/10 to-cream-light rounded-card p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row items-center gap-6">
-            <div className="flex-1 text-center sm:text-left">
-              <h3 className="text-xl font-bold text-text-primary mb-2">
-                星爷 → 镇山虎 → 6人团队
-              </h3>
-              <p className="text-text-secondary text-sm mb-4">
-                星爷直接对接镇山虎（总控Agent），由镇山虎将任务分发给6个专业Agent
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start">
-                <div className="px-4 py-2 bg-white rounded-button text-sm">
-                  <span className="font-medium">星爷</span> - 老板
-                </div>
-                <div className="px-4 py-2 bg-coral text-white rounded-button text-sm">
-                  <span className="font-medium">镇山虎</span> - 总控
-                </div>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { icon: '✍️', title: '文案手', desc: '内容创作' },
-                { icon: '🎨', title: '设计师', desc: '视觉设计' },
-                { icon: '💻', title: '工程师', desc: '技术开发' },
-                { icon: '🎬', title: '导演', desc: '视频制作' },
-                { icon: '📈', title: '运营', desc: '社媒运营' },
-                { icon: '📚', title: '资料专员', desc: '知识管理' },
-              ].map((item) => (
-                <div key={item.title} className="text-center">
-                  <div className="w-12 h-12 bg-white rounded-card shadow-card flex items-center justify-center text-xl mb-1">
-                    {item.icon}
-                  </div>
-                  <p className="text-xs font-medium text-text-primary">{item.title}</p>
-                  <p className="text-xs text-text-secondary">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Tip */}
+        <div className="mt-12 bg-gradient-to-r from-[#E85A4F]/10 to-orange-100 rounded-2xl p-6 text-center">
+          <p className="text-gray-700">
+            💡 <strong>提示：</strong>将配置代码复制到 <code className="bg-white px-2 py-1 rounded">openclaw.json</code> 的 skills 部分，
+            重启 Gateway 即可使用该技能
+          </p>
         </div>
-      </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }

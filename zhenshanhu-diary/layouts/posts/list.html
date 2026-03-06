@@ -10,9 +10,15 @@
 <div class="posts-gallery">
     {{- range .Pages }}
     <a href="{{ .Permalink }}" class="post-card">
+        {{- with .Params.featured_image }}
+        <div class="post-card-image" style="overflow: hidden;">
+            <img src="{{ . }}" alt="{{ $.Title }}" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        {{- else }}
         <div class="post-card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
             <span style="font-size: 80px;">💡</span>
         </div>
+        {{- end }}
         <div class="post-card-content">
             <h3 class="post-card-title">{{ .Title }}</h3>
             <p class="post-card-desc">{{ .Summary | truncate 100 }}</p>
